@@ -4,6 +4,7 @@ require('config.base')
 require('config.mappings')
 require('config.lazy')
 require('config.lsp-format')
+require('config.autopairs')
 
 -- // APPEARANCE // --
 

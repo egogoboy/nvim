@@ -1,4 +1,4 @@
-require("lsp-format").setup {}
+require("lsp-format").setup{}
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
