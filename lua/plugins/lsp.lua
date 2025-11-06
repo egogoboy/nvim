@@ -20,7 +20,6 @@ return {
         automatic_installation = true,
       })
 
-      -- ↓ вместо mason_lspconfig.setup_handlers()
       local lspconfig = require("lspconfig")
 
       for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
@@ -33,6 +32,16 @@ return {
           capabilities = require("cmp_nvim_lsp").default_capabilities(),
         })
       end
+
+      require("lspconfig").clangd.setup({
+        cmd = { "clangd", "--compile-commands-dir=build" },
+        on_attach = function(_, bufnr)
+          local opts = { buffer = bufnr, silent = true }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        end,
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
     end
   },
 
@@ -93,7 +102,12 @@ return {
           { name = "nvim_lsp" },
           { name = "luasnip" },
         },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        }
       })
+
     end,
   },
 }
